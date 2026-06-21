@@ -1,0 +1,27 @@
+class Solution:
+    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
+        res = []
+
+        top, bottum = 0, len(matrix)
+        left, right = 0, len(matrix[0])
+
+        while top < bottum and left < right:
+            for i in range(left, right):
+                res.append(matrix[top][i])
+            top += 1
+
+            for j in range(top, bottum):
+                res.append(matrix[j][right - 1])
+            right -= 1
+
+            if not (top < bottum and left < right):
+                break
+            
+            for k in range(right - 1, left - 1, -1):
+                res.append(matrix[bottum - 1][k])
+            bottum -= 1
+
+            for l in range(bottum - 1, top - 1, -1):
+                res.append(matrix[l][left])
+            left += 1
+        return res

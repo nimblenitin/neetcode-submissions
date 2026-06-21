@@ -1,0 +1,20 @@
+class Solution:
+    def findKthLargest(self, nums: List[int], k: int) -> int:
+        k = len(nums) - k
+        def quickSort(l, r):
+            p, pivot = l, nums[r]
+            for i in range(l, r):
+                if nums[i] <= pivot:
+                    nums[p], nums[i] = nums[i], nums[p]
+                    p += 1
+            nums[p], nums[r] = nums[r], nums[p]
+            if p < k:
+                return quickSort(p + 1, r)
+            elif p > k:
+                return quickSort(l, p - 1)
+            else:
+                return nums[p]
+        return quickSort(0, len(nums) - 1)
+
+
+

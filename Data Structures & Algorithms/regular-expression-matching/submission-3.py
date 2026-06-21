@@ -1,0 +1,19 @@
+class Solution:
+    def isMatch(self, s: str, p: str) -> bool:
+        n, m = len(s), len(p)
+        cache = {}
+        def dfs(i, j):
+            if j == m:
+                return i == n
+            if (i, j) in cache:
+                return cache[(i, j)]
+            match = (i < n) and(s[i] == p[j] or p[j] == ".")
+            if (j + 1 < m) and(p[j + 1] == "*"):
+                cache[(i, j)] = (match and dfs(i + 1, j)) or dfs(i, j + 2)
+                return cache[(i, j)] 
+            if match:
+                cache[(i, j)] = dfs(i + 1, j + 1)
+                return cache[(i, j)]
+            cache[(i, j)] = False 
+            return False
+        return dfs(0, 0)
